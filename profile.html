@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>حساب کاربری</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>👤 حساب کاربری</h1>
+
+<div class="stats-bar">
+
+    <div class="stat-item">
+        <span class="icon">🪙</span>
+        <span id="coins">0</span>
+    </div>
+
+    <div class="stat-item">
+        <span class="icon">🎟</span>
+        <span id="tickets">0</span>
+    </div>
+
+    <div class="stat-item">
+        <span class="icon">🔥</span>
+        <span id="streak">0</span>
+    </div>
+
+<div class="stat-item">
+    <span class="icon">⭐</span>
+    <span id="level">1</span>
+</div>
+
+</div>
+
+<div class="card">
+<p>🆔 شناسه کاربر:
+<span id="profileUserId"></span></p>
+
+<p>
+⭐ سطح:
+<span id="profileLevel">
+1
+</span>
+</p>
+
+<p>✨ عنوان:
+<span id="profileLevelName">تازه‌وارد</span></p>
+
+<p>⚡ XP:
+<span id="profileXp">0</span></p>
+
+<p>🎥 سهمیه تبلیغات:
+<span id="profileDailyAdsLimit">10</span></p>
+
+<p>🪙 سکه ها: <span id="profileCoins">0</span></p>
+
+<p>🎟 بلیت ها: <span id="profileTickets">0</span></p>
+
+<p>🔥 زنجیره فعلی: <span id="profileStreak">0</span></p>
+<p>🏆 بهترین زنجیره: <span id="profileBestStreak">0</span></p>
+
+<p>⭐ امتیاز وفاداری:
+<span id="profileLoyalty">0</span></p>
+
+</div>
+
+<div class="card">
+
+<h2>👥 دعوت از دوستان</h2>
+
+<p>
+برای هر دوست که وارد برنامه شود
+30 سکه دریافت می‌کنی.
+</p>
+
+<p>
+کد دعوت شما:
+</p>
+
+<p id="inviteCode">
+SKINO123
+</p>
+
+<div class="invite-buttons">
+
+<button onclick="copyInviteCode()">
+📤 اشتراک گذاری
+</button>
+
+<button onclick="showInvites()">
+👥 دعوت‌شده‌ها
+</button>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>🎁 وارد کردن کد دعوت</h2>
+
+<input
+type="text"
+id="friendInviteCode"
+placeholder="کد دعوت را وارد کنید"
+>
+
+<button onclick="redeemInviteCode()">
+ثبت کد
+</button>
+
+<p id="inviteResult"></p>
+
+</div>
+<div class="card">
+
+<h2>📄 اطلاعات</h2>
+
+<p>
+<a href="terms.html">
+📜 قوانین استفاده
+</a>
+</p>
+
+<p>
+<a href="privacy.html">
+🔒 حریم خصوصی
+</a>
+</p>
+<p>
+<a href="about.html">
+ℹ️ درباره سکینو
+</a>
+</p>
+<p>
+<a href="contact.html">
+📞 تماس با ما
+</a>
+</p>
+<p>
+نسخه برنامه:
+v1.0
+</p>
+
+</div>
+</div>
+
+<div id="invitesModal" class="modal">
+
+    <div class="modal-content">
+
+        <h2>👥 دعوت‌شده‌ها</h2>
+
+        <p>
+            تعداد دوستان دعوت‌شده:
+            <span id="invitedFriendsCount">
+                0
+            </span>
+        </p>
+
+        <p>
+            مجموع پاداش:
+            <span id="inviteRewardCoins">
+                0
+            </span>
+            سکه
+        </p>
+
+        <button onclick="closeInvites()">
+            بستن
+        </button>
+
+    </div>
+
+</div>
+
+<div class="bottom-nav">
+
+<a class="nav-item" href="index.html">
+🏠
+<br>
+خانه
+</a>
+
+<a class="nav-item" href="rewards.html">
+🎟
+<br>
+جوایز
+</a>
+
+<a class="nav-item active" href="profile.html">
+👤
+<br>
+حساب
+</a>
+
+</div>
+
+<script>
+document.getElementById(
+    "profileUserId"
+).innerText =
+localStorage.getItem(
+    "userId"
+) || "-";
+
+document.getElementById("profileCoins").innerText =
+localStorage.getItem("coins") || 0;
+
+document.getElementById("profileLevel").innerText =
+localStorage.getItem("level") || 1;
+
+document.getElementById("profileTickets").innerText =
+localStorage.getItem("tickets") || 0;
+
+document.getElementById("profileStreak").innerText =
+(localStorage.getItem("streak") || 0) + " روز";
+document.getElementById("profileBestStreak").innerText =
+localStorage.getItem("bestStreak") || 0;
+let inviteCode =
+localStorage.getItem("inviteCode");
+
+if(!inviteCode){
+
+    inviteCode =
+    "SK" +
+    Math.floor(
+        100000 + Math.random() * 900000
+    );
+
+    localStorage.setItem(
+        "inviteCode",
+        inviteCode
+    );
+}
+
+document.getElementById("inviteCode").innerText =
+inviteCode;
+
+function copyInviteCode(){
+
+    let inviteCode =
+    localStorage.getItem("inviteCode");
+
+    navigator.clipboard.writeText(
+        "کد دعوت من در سکینو: " +
+        inviteCode
+    );
+
+    alert(
+        "کد دعوت کپی شد ✅"
+    );
+}
+
+function redeemInviteCode(){
+
+    let enteredCode =
+    document.getElementById(
+        "friendInviteCode"
+    ).value;
+
+    let myCode =
+    localStorage.getItem(
+        "inviteCode"
+    );
+
+    if(
+        enteredCode === ""
+    ){
+
+        document.getElementById(
+            "inviteResult"
+        ).innerText =
+        "کد دعوت را وارد کنید";
+
+        return;
+    }
+
+let codePattern = /^SK\d{6}$/;
+
+if(
+    !codePattern.test(
+        enteredCode
+    )
+){
+
+    document.getElementById(
+        "inviteResult"
+    ).innerText =
+    "فرمت کد دعوت صحیح نیست";
+
+    return;
+}
+
+    if(
+        enteredCode === myCode
+    ){
+
+        document.getElementById(
+            "inviteResult"
+        ).innerText =
+        "نمی‌توانی کد خودت را وارد کنی";
+
+        return;
+    }
+
+    if(
+        localStorage.getItem(
+            "inviteUsed"
+        ) === "yes"
+    ){
+
+        document.getElementById(
+            "inviteResult"
+        ).innerText =
+        "قبلاً کد دعوت ثبت شده است";
+
+        return;
+    }
+
+    let coins =
+    Number(
+        localStorage.getItem(
+            "coins"
+        )
+    ) || 0;
+
+    coins += 30;
+
+    localStorage.setItem(
+        "coins",
+        coins
+    );
+
+document.getElementById(
+    "profileCoins"
+).innerText = coins;
+
+document.getElementById(
+    "coins"
+).innerText = coins;
+
+    localStorage.setItem(
+        "inviteUsed",
+        "yes"
+    );
+
+    document.getElementById(
+        "inviteResult"
+    ).innerText =
+    "🎉 30 سکه دریافت کردی";
+
+}
+
+document.getElementById("profileLoyalty").innerText =
+localStorage.getItem("loyaltyPoints") || 0;
+
+document.getElementById("level").innerText =
+localStorage.getItem("level") || 1;
+
+document.getElementById("profileLevelName").innerText =
+localStorage.getItem("levelName") || "🌱 تازه‌وارد";
+
+document.getElementById("profileXp").innerText =
+localStorage.getItem("xp") || 0;
+
+document.getElementById(
+    "profileDailyAdsLimit"
+).innerText =
+localStorage.getItem(
+    "maxDailyAds"
+) || 10;
+
+document.getElementById("coins").innerText =
+localStorage.getItem("coins") || 0;
+
+document.getElementById("tickets").innerText =
+localStorage.getItem("tickets") || 0;
+
+document.getElementById("streak").innerText =
+(localStorage.getItem("streak") || 0) + " روز";
+
+function showInvites(){
+
+    let invitedFriends =
+    Number(
+        localStorage.getItem(
+            "invitedFriends"
+        )
+    ) || 0;
+
+    document.getElementById(
+        "invitedFriendsCount"
+    ).innerText =
+    invitedFriends;
+
+    document.getElementById(
+        "inviteRewardCoins"
+    ).innerText =
+    invitedFriends * 30;
+
+    document.getElementById(
+        "invitesModal"
+    ).style.display =
+    "block";
+
+}
+
+function closeInvites(){
+
+    document.getElementById(
+        "invitesModal"
+    ).style.display =
+    "none";
+
+}
+
+</script>
+
+</body>
+
+</html>
