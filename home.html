@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>سکینو</title>
+
+<link rel="manifest" href="manifest.json">
+
+<link rel="icon" type="image/png" href="icon-512.png">
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="stats-bar">
+
+    <div class="stat-item">
+        <span class="icon">🪙</span>
+        <span id="coins">20</span>
+    </div>
+
+    <div class="stat-item">
+        <span class="icon">🎟</span>
+        <span id="tickets">0</span>
+    </div>
+
+    <div class="stat-item">
+        <span class="icon">🔥</span>
+        <span id="streak">1 روز</span>
+    </div>
+
+<div class="stat-item">
+    <span class="icon">⭐</span>
+    <span id="level">1</span>
+</div>
+
+</div>
+
+<button
+class="home-btn"
+onclick="openBox()">
+🎁 جعبه شانس
+</button>
+
+<button
+id="watchAdBtn"
+onclick="watchAd()"
+>
+🎥 مشاهده تبلیغ
+</button>
+
+<p id="result"></p>
+
+<button class="mission-btn" onclick="showMissions()">
+🎯 مأموریت‌های روزانه
+</button>
+
+<div id="adModal" class="modal">
+
+    <div class="modal-content">
+
+        <h2>🎥 تبلیغ</h2>
+
+        <p>
+            لطفاً تا پایان زمان منتظر بمانید
+        </p>
+
+        <h1 id="adTimer">
+            15
+        </h1>
+
+        <button
+        id="claimRewardBtn"
+        onclick="claimAdReward()"
+        style="display:none;"
+        >
+            دریافت سکه
+        </button>
+
+    </div>
+
+</div>
+
+<div id="missionsModal" class="modal">
+
+<div class="modal-content">
+
+<h2>🎯 مأموریت‌های امروز</h2>
+
+<p id="missionAds">
+🎥 مشاهده 10 تبلیغ
+</p>
+
+<p id="missionBox">
+⬜ باز کردن جعبه شانس
+</p>
+
+<p id="missionInvite">
+⬜ دعوت از 1 دوست
+</p>
+
+<p>
+🎁 پاداش نهایی:
+10 سکه
+</p>
+
+<button onclick="closeMissions()">
+بستن
+</button>
+
+</div>
+
+</div>
+
+<div class="bottom-nav">
+
+<a class="nav-item active" href="home.html">
+
+🏠
+
+<br>
+
+خانه
+
+</a>
+
+<a class="nav-item" href="rewards.html">
+
+🎟
+
+<br>
+
+جوایز
+
+</a>
+
+<a class="nav-item" href="profile.html">
+
+👤
+
+<br>
+
+حساب
+
+</a>
+
+</div>
+<script type="module" src="firebase.js"></script>
+<script src="app.js"></script>
+
+</body>
+
+</html>
